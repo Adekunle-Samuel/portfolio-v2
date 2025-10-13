@@ -12,9 +12,9 @@ import { projectBySlugQuery, projectSlugsQuery, projectsQuery, siteSettingsQuery
 import { SiteSettings } from '@/types/siteSettings'
 
 interface ProjectPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 // Generate static params for all projects
@@ -42,8 +42,9 @@ async function getSiteSettings(): Promise<SiteSettings | null> {
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
+  const { slug } = await params
   const [project, allProjects, siteSettings] = await Promise.all([
-    getProjectDetail(params.slug),
+    getProjectDetail(slug),
     client.fetch(projectsQuery),
     getSiteSettings(),
   ])
@@ -136,7 +137,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <div className="max-w-[1440px] mx-auto border-t border-gray-200" />
       </div>
 
-      <ProjectCarousel currentSlug={params.slug} projects={allProjects} />
+      <ProjectCarousel currentSlug={slug} projects={allProjects} />
 
       <BackButton />
 

@@ -22,12 +22,13 @@ export default function Footer({ siteSettings }: FooterProps = { siteSettings: n
           transition={{ duration: 0.5 }}
         >
           {/* Logo */}
-          <div className="w-[39px] h-[42px]">
+          <div className="w-[60px] h-[60px]">
             <Image
-              src="/assets/26f1dfa8639ad78e48038310e73695fa8e9ef37d.svg"
-              alt="Logo"
-              width={39}
-              height={42}
+              src="/assets/logo.png"
+              alt="Samuel Akorede Adekunle Logo"
+              width={60}
+              height={60}
+              className="rounded-full"
             />
           </div>
 

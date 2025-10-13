@@ -1,3 +1,6 @@
+'use client'
+
+import { useState, useEffect, useMemo } from 'react'
 import { notFound } from 'next/navigation'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
@@ -7,8 +10,9 @@ import ContentSection from '@/components/project/ContentSection'
 import ImageGrid from '@/components/project/ImageGrid'
 import ProjectCarousel from '@/components/project/ProjectCarousel'
 import BackButton from '@/components/project/BackButton'
-import { client } from '@/lib/sanity.client'
-import { projectBySlugQuery, projectSlugsQuery, projectsQuery, siteSettingsQuery } from '@/lib/queries'
+import ImagePreview from '@/components/project/ImagePreview'
+import { client, getOptimizedImageUrl } from '@/lib/sanity.client'
+import { projectBySlugQuery, projectsQuery, siteSettingsQuery } from '@/lib/queries'
 import { SiteSettings } from '@/types/siteSettings'
 import { ContentSection as ContentSectionType } from '@/types/project'
 
@@ -18,37 +22,117 @@ interface ProjectPageProps {
   }>
 }
 
-// Generate static params for all projects
-export async function generateStaticParams() {
-  const projects = await client.fetch<{ slug: string }[]>(projectSlugsQuery)
-  return projects.map((project) => ({
-    slug: project.slug,
-  }))
+// Main component wrapper to handle async params
+export default function ProjectPageWrapper({ params }: ProjectPageProps) {
+  const [slug, setSlug] = useState<string | null>(null)
+
+  useEffect(() => {
+    params.then(p => setSlug(p.slug))
+  }, [params])
+
+  if (!slug) return null
+
+  return <ProjectPage slug={slug} />
 }
 
-// Fetch project data from Sanity
-async function getProjectDetail(slug: string) {
-  const project = await client.fetch(projectBySlugQuery, { slug })
-  return project
-}
+// Actual page component
+function ProjectPage({ slug }: { slug: string }) {
+  const [project, setProject] = useState<any>(null)
+  const [allProjects, setAllProjects] = useState<any[]>([])
+  const [siteSettings, setSiteSettings] = useState<SiteSettings | null>(null)
+  const [loading, setLoading] = useState(true)
+  
+  // Image preview state
+  const [previewOpen, setPreviewOpen] = useState(false)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
-async function getSiteSettings(): Promise<SiteSettings | null> {
-  try {
-    const settings = await client.fetch(siteSettingsQuery)
-    return settings
-  } catch (error) {
-    console.error('Error fetching site settings:', error)
-    return null
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [projectData, projectsData, settingsData] = await Promise.all([
+          client.fetch(projectBySlugQuery, { slug }),
+          client.fetch(projectsQuery),
+          client.fetch(siteSettingsQuery).catch(() => null),
+        ])
+        
+        setProject(projectData)
+        setAllProjects(projectsData)
+        setSiteSettings(settingsData)
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    
+    fetchData()
+  }, [slug])
+
+  // Collect all images from the project
+  const allImages = useMemo(() => {
+    if (!project) return []
+    
+    const images: string[] = []
+    
+    // Hero image
+    if (project.heroImage) {
+      images.push(getOptimizedImageUrl(project.heroImage, 2880, 1068))
+    }
+    
+    // TLDR image
+    if (project.tldr?.image) {
+      images.push(getOptimizedImageUrl(project.tldr.image, 1400, 634))
+    }
+    
+    // Content sections images
+    project.contentSections?.forEach((section: ContentSectionType) => {
+      if (section.image) {
+        images.push(getOptimizedImageUrl(section.image, 1400, 634))
+      }
+    })
+    
+    // Gallery images
+    if (project.gallery?.largeImage) {
+      images.push(getOptimizedImageUrl(project.gallery.largeImage, 2360, 1144))
+    }
+    if (project.gallery?.smallImages) {
+      project.gallery.smallImages.forEach((img: any) => {
+        images.push(getOptimizedImageUrl(img, 762, 550))
+      })
+    }
+    
+    return images
+  }, [project])
+
+  // Handle image click
+  const handleImageClick = (imageUrl: string) => {
+    const index = allImages.indexOf(imageUrl)
+    if (index !== -1) {
+      setCurrentImageIndex(index)
+      setPreviewOpen(true)
+    }
   }
-}
 
-export default async function ProjectPage({ params }: ProjectPageProps) {
-  const { slug } = await params
-  const [project, allProjects, siteSettings] = await Promise.all([
-    getProjectDetail(slug),
-    client.fetch(projectsQuery),
-    getSiteSettings(),
-  ])
+  // Navigation handlers
+  const handleNext = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % allImages.length)
+  }
+
+  const handlePrevious = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length)
+  }
+
+  const handleClose = () => {
+    setPreviewOpen(false)
+  }
+
+  if (loading) {
+    return (
+      <main className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-gray-500">Loading...</div>
+      </main>
+    )
+  }
 
   if (!project) {
     notFound()
@@ -62,6 +146,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         title={project.title}
         description={project.description || "Product description outlining goal of the project/business"}
         heroImage={project.heroImage}
+        onImageClick={handleImageClick}
       />
       
       <ProjectInfo
@@ -85,6 +170,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               bullets={project.tldr.bullets}
               layout="image-right"
               image={project.tldr.image}
+              onImageClick={handleImageClick}
             />
           )}
 
@@ -101,6 +187,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 bullets={section.bullets}
                 layout={layout as 'image-right' | 'image-left'}
                 image={section.image}
+                onImageClick={handleImageClick}
               />
             )
           })}
@@ -110,6 +197,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <ImageGrid 
               largeImage={project.gallery.largeImage}
               smallImages={project.gallery.smallImages}
+              onImageClick={handleImageClick}
             />
           )}
 
@@ -143,7 +231,16 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <BackButton />
 
       <Footer siteSettings={siteSettings} />
+
+      {/* Image Preview Modal */}
+      <ImagePreview
+        images={allImages}
+        currentIndex={currentImageIndex}
+        isOpen={previewOpen}
+        onClose={handleClose}
+        onNext={handleNext}
+        onPrevious={handlePrevious}
+      />
     </main>
   )
 }
-

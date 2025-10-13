@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { urlFor } from '@/lib/sanity.client'
+import { getOptimizedImageUrl } from '@/lib/sanity.client'
 import { SanityImageSource } from '@sanity/image-url/lib/types/types'
 
 interface ContentSectionProps {
@@ -11,6 +11,7 @@ interface ContentSectionProps {
   image?: SanityImageSource | null
   imageUrl?: string | null
   layout?: 'image-left' | 'image-right'
+  onImageClick?: (imageUrl: string) => void
 }
 
 const PlaceholderImage = () => (
@@ -29,9 +30,10 @@ export default function ContentSection({
   bullets, 
   image,
   imageUrl, 
-  layout = 'image-right' 
+  layout = 'image-right',
+  onImageClick
 }: ContentSectionProps) {
-  const finalImageUrl = image ? urlFor(image).width(1400).height(634).quality(90).format('webp').url() : imageUrl
+  const finalImageUrl = image ? getOptimizedImageUrl(image, 1400, 634) : imageUrl
   
   const content = (
     <div className="flex flex-col gap-3 w-full lg:w-auto lg:flex-1 lg:max-w-[450px]">
@@ -53,9 +55,10 @@ export default function ContentSection({
 
   const imageElement = (
     <motion.div 
-      className="w-full lg:w-auto lg:flex-1 lg:max-w-[700px] h-[317px] rounded-lg overflow-hidden"
+      className="w-full lg:w-auto lg:flex-1 lg:max-w-[700px] h-[317px] rounded-lg overflow-hidden cursor-pointer"
       whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.3 }}
+      onClick={() => finalImageUrl && onImageClick?.(finalImageUrl)}
     >
       {finalImageUrl ? (
         <img src={finalImageUrl} alt={title} className="w-full h-full object-cover" />

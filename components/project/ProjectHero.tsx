@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { urlFor } from '@/lib/sanity.client'
+import { getOptimizedImageUrl } from '@/lib/sanity.client'
 import { SanityImageSource } from '@sanity/image-url/lib/types/types'
 
 interface ProjectHeroProps {
@@ -9,18 +9,20 @@ interface ProjectHeroProps {
   description: string
   heroImage?: SanityImageSource | null
   imageUrl?: string | null
+  onImageClick?: (imageUrl: string) => void
 }
 
-export default function ProjectHero({ title, description, heroImage, imageUrl }: ProjectHeroProps) {
-  const finalImageUrl = heroImage ? urlFor(heroImage).width(2880).height(1068).quality(90).format('webp').url() : imageUrl
+export default function ProjectHero({ title, description, heroImage, imageUrl, onImageClick }: ProjectHeroProps) {
+  const finalImageUrl = heroImage ? getOptimizedImageUrl(heroImage, 2880, 1068) : imageUrl
   return (
     <>
       {/* Large Hero Image */}
       <motion.div 
-        className="w-full h-[534px] mt-[121px] relative overflow-hidden"
+        className="w-full h-[534px] mt-[121px] relative overflow-hidden cursor-pointer"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
+        onClick={() => finalImageUrl && onImageClick?.(finalImageUrl)}
       >
         {finalImageUrl ? (
           <img 

@@ -1,12 +1,13 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { urlFor } from '@/lib/sanity.client'
+import { getOptimizedImageUrl } from '@/lib/sanity.client'
 import { SanityImageSource } from '@sanity/image-url/lib/types/types'
 
 interface ImageGridProps {
   largeImage?: SanityImageSource | null
   smallImages?: SanityImageSource[] | null
+  onImageClick?: (imageUrl: string) => void
 }
 
 const PlaceholderImage = ({ className }: { className?: string }) => (
@@ -19,9 +20,9 @@ const PlaceholderImage = ({ className }: { className?: string }) => (
   </div>
 )
 
-export default function ImageGrid({ largeImage, smallImages }: ImageGridProps) {
-  const largeImageUrl = largeImage ? urlFor(largeImage).width(2360).height(1144).quality(90).format('webp').url() : null
-  const smallImageUrls = smallImages?.map(img => urlFor(img).width(762).height(550).quality(90).format('webp').url()) || []
+export default function ImageGrid({ largeImage, smallImages, onImageClick }: ImageGridProps) {
+  const largeImageUrl = largeImage ? getOptimizedImageUrl(largeImage, 2360, 1144) : null
+  const smallImageUrls = smallImages?.map(img => getOptimizedImageUrl(img, 762, 550)) || []
   return (
     <motion.div 
       className="flex flex-col gap-4 w-full"
@@ -32,9 +33,10 @@ export default function ImageGrid({ largeImage, smallImages }: ImageGridProps) {
     >
       {/* Large Image */}
       <motion.div 
-        className="w-full h-[572px] rounded-lg overflow-hidden"
+        className="w-full h-[572px] rounded-lg overflow-hidden cursor-pointer"
         whileHover={{ scale: 1.01 }}
         transition={{ duration: 0.3 }}
+        onClick={() => largeImageUrl && onImageClick?.(largeImageUrl)}
       >
         {largeImageUrl ? (
           <img src={largeImageUrl} alt="Project showcase" className="w-full h-full object-cover" />
@@ -48,9 +50,10 @@ export default function ImageGrid({ largeImage, smallImages }: ImageGridProps) {
         {[0, 1, 2].map((i) => (
           <motion.div 
             key={i}
-            className="w-full h-[275px] rounded-lg overflow-hidden"
+            className="w-full h-[275px] rounded-lg overflow-hidden cursor-pointer"
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.3 }}
+            onClick={() => smallImageUrls[i] && onImageClick?.(smallImageUrls[i])}
           >
             {smallImageUrls[i] ? (
               <img src={smallImageUrls[i]} alt={`Project detail ${i + 1}`} className="w-full h-full object-cover" />

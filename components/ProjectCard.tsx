@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Project } from '@/types/project'
-import { urlFor } from '@/lib/sanity.client'
+import { getOptimizedImageUrl } from '@/lib/sanity.client'
 
 interface ProjectCardProps {
   project: Project
@@ -17,7 +17,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
   const [imageError, setImageError] = useState(false)
   
   const imageUrl = project.coverImage 
-    ? urlFor(project.coverImage).width(912).height(498).quality(90).format('webp').url()
+    ? getOptimizedImageUrl(project.coverImage, 912, 498)
     : null
 
   return (

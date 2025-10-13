@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Project } from '@/types/project'
-import { urlFor } from '@/lib/sanity.client'
+import { getOptimizedImageUrl } from '@/lib/sanity.client'
 
 interface AboutProjectCarouselProps {
   projects: Project[]
@@ -42,7 +42,7 @@ export default function AboutProjectCarousel({ projects }: AboutProjectCarouselP
                   <div className="absolute inset-0">
                     {project.coverImage ? (
                       <img 
-                        src={urlFor(project.coverImage).width(498).height(280).quality(90).format('webp').url()} 
+                        src={getOptimizedImageUrl(project.coverImage, 498, 280)} 
                         alt={project.title}
                         className="w-full h-full object-cover"
                       />

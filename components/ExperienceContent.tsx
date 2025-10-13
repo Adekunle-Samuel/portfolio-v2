@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { About } from '@/types/about'
+import { About, WorkExperience } from '@/types/about'
 import { SiteSettings } from '@/types/siteSettings'
 import ResumeButton from './ResumeButton'
 
@@ -11,7 +11,7 @@ interface ExperienceContentProps {
 }
 
 // Fallback experience data
-const fallbackExperience = [
+const fallbackExperience: WorkExperience[] = [
   { company: 'B150', role: 'Product Designer', period: '2025–Present' },
   { company: 'Ernst & Young (EY)', role: 'Production Designer (Contract)', period: '2024–2025' },
   { company: 'Rowan College at Burlington County', role: 'Visual Designer', period: '2022–2024' }

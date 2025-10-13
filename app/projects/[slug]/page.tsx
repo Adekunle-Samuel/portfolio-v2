@@ -123,7 +123,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 {project.conclusion.text && <p className="mb-4">{project.conclusion.text}</p>}
                 {project.conclusion.bullets && project.conclusion.bullets.length > 0 && (
                   <ul className="list-disc pl-5 space-y-2">
-                    {project.conclusion.bullets.map((bullet, i) => (
+                    {project.conclusion.bullets.map((bullet: string, i: number) => (
                       <li key={i}>{bullet}</li>
                     ))}
                   </ul>

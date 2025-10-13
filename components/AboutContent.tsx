@@ -71,7 +71,7 @@ export default function AboutContent({ aboutData, siteSettings }: AboutContentPr
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
-              <ResumeButton siteSettings={siteSettings} variant="large" buttonText="Work with me" />
+              <ResumeButton siteSettings={siteSettings ?? null} variant="large" buttonText="Work with me" />
             </motion.div>
           </motion.div>
 

@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Disallow Sanity Studio from being indexed
+User-agent: *
+Disallow: /studio/
+
+Sitemap: https://yourdomain.com/sitemap.xml
+

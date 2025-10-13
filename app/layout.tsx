@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Sam Adekunle - Portfolio",
     description: "Designer working at the intersection of product, brand and development.",
-    url: "www.thesamadekunle.com", // Replace with your actual domain
+    url: "https://www.thesamadekunle.com",
     siteName: "Sam Adekunle Portfolio",
     locale: "en_US",
     type: "website",
@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body suppressHydrationWarning>
         <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
       </body>
     </html>

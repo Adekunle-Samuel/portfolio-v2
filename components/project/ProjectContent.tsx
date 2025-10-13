@@ -84,7 +84,7 @@ export default function ProjectContent({ project, allProjects, siteSettings }: P
     <>
       <ProjectHero 
         title={project.title}
-        description={project.description || "Product description outlining goal of the project/business"}
+        description={project.description || ""}
         heroImage={project.heroImage}
         onImageClick={handleImageClick}
       />

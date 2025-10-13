@@ -10,6 +10,7 @@ import BackButton from '@/components/project/BackButton'
 import { client } from '@/lib/sanity.client'
 import { projectBySlugQuery, projectSlugsQuery, projectsQuery, siteSettingsQuery } from '@/lib/queries'
 import { SiteSettings } from '@/types/siteSettings'
+import { ContentSection as ContentSectionType } from '@/types/project'
 
 interface ProjectPageProps {
   params: Promise<{
@@ -88,7 +89,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           )}
 
           {/* Content Sections */}
-          {project.contentSections?.map((section, index) => {
+          {project.contentSections?.map((section: ContentSectionType, index: number) => {
             // Determine layout based on section structure
             const layout = section.layout || (index % 2 === 0 ? 'image-right' : 'image-left')
             

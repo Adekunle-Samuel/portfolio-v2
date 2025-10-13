@@ -205,3 +205,4 @@ All styling is in `components/Footer.tsx`.
 
 **Summary:** Footer now has Resume link, social media integration with Sanity, and design attribution. It's fully functional and appears on all pages! 🎉
 
+

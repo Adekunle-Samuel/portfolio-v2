@@ -238,3 +238,4 @@ You now have a complete content management system for your portfolio! Everything
 
 Just add your content in Sanity Studio and it appears on your site instantly. No code changes required! 🎉
 
+

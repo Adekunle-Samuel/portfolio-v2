@@ -226,3 +226,4 @@ Let me know if you want me to clean these up!
 
 **Summary:** Stack page is now a focused work experience page with a resume CTA. About page has a more personal "Work with me" button. Everything is cleaner and more purposeful! 🎉
 
+

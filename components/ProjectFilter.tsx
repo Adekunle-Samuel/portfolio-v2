@@ -7,9 +7,9 @@ interface ProjectFilterProps {
 
 const filters = [
   { label: 'All', value: 'all' },
-  { label: 'Brand', value: 'brand' },
-  { label: 'Product', value: 'product' },
-  { label: 'Development', value: 'development' },
+  { label: 'Brand Design', value: 'brand' },
+  { label: 'Product Design', value: 'product' },
+  { label: 'AI Development', value: 'development' },
   { label: 'Design', value: 'design' },
 ]
 

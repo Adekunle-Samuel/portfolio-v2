@@ -23,18 +23,24 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'category',
-      title: 'Category',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Brand', value: 'brand' },
-          { title: 'Product', value: 'product' },
-          { title: 'Development', value: 'development' },
-          { title: 'Design', value: 'design' },
-        ],
-      },
-      validation: (Rule) => Rule.required(),
+      name: 'categories',
+      title: 'Categories',
+      type: 'array',
+      of: [
+        {
+          type: 'string',
+          options: {
+            list: [
+              { title: 'Brand', value: 'brand' },
+              { title: 'Product', value: 'product' },
+              { title: 'Development', value: 'development' },
+              { title: 'Design', value: 'design' },
+            ],
+          },
+        },
+      ],
+      validation: (Rule) => Rule.required().min(1).max(2),
+      description: 'Select 1-2 categories for this project',
     }),
     defineField({
       name: 'coverImage',
@@ -272,14 +278,15 @@ export default defineType({
     select: {
       title: 'title',
       media: 'coverImage',
-      category: 'category',
+      categories: 'categories',
       order: 'order',
     },
     prepare(selection) {
-      const { title, media, category, order } = selection
+      const { title, media, categories, order } = selection
+      const categoryStr = categories && categories.length > 0 ? categories.join(', ') : 'No categories'
       return {
         title: title || 'Untitled Project',
-        subtitle: `${category || 'No category'} ${order ? `• Order: ${order}` : ''}`,
+        subtitle: `${categoryStr} ${order ? `• Order: ${order}` : ''}`,
         media,
       }
     },

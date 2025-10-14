@@ -5,7 +5,7 @@ import { SiteSettings } from '@/types/siteSettings'
 import { placeholderProjects } from '@/lib/placeholder-data'
 import Navigation from '@/components/Navigation'
 import Hero from '@/components/Hero'
-import ProjectGrid from '@/components/ProjectGrid'
+import ProjectSection from '@/components/ProjectSection'
 import Footer from '@/components/Footer'
 
 async function getProjects(): Promise<Project[]> {
@@ -40,7 +40,7 @@ export default async function Home() {
     <main className="min-h-screen bg-white">
       <Navigation siteSettings={siteSettings} />
       <Hero siteSettings={siteSettings} />
-      <ProjectGrid projects={projects} />
+      <ProjectSection projects={projects} />
       <Footer siteSettings={siteSettings} />
     </main>
   )

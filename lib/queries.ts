@@ -2,7 +2,7 @@ export const projectsQuery = `*[_type == "project"] | order(order asc) {
   _id,
   title,
   slug,
-  category,
+  categories,
   coverImage,
   description,
   projectUrl
@@ -12,7 +12,7 @@ export const projectBySlugQuery = `*[_type == "project" && slug.current == $slug
   _id,
   title,
   slug,
-  category,
+  categories,
   coverImage,
   description,
   projectUrl,

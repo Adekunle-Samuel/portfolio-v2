@@ -78,7 +78,7 @@ export default function ProjectCarousel({ currentSlug, projects }: ProjectCarous
                 >
                   <div>
                     <p className="text-xs font-bold text-white">{project.title}</p>
-                    <p className="text-[10px] text-white/70">{project.category}</p>
+                    <p className="text-[10px] text-white/70 capitalize">{project.categories?.join(', ')}</p>
                   </div>
                 </motion.div>
               </motion.div>

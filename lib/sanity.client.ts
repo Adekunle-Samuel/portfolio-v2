@@ -38,13 +38,16 @@ function isGif(source: SanityImageSource): boolean {
 }
 
 // Smart image URL builder that preserves GIF animations
+// Default quality increased to 95 for high-resolution displays
 export function getOptimizedImageUrl(
   source: SanityImageSource,
   width: number,
   height?: number,
-  quality: number = 90
+  quality: number = 95
 ): string {
-  const urlBuilder = urlFor(source).width(width).quality(quality)
+  // Double the dimensions for retina displays (2x)
+  const retinaWidth = width * 2
+  const urlBuilder = urlFor(source).width(retinaWidth).quality(quality)
   
   // Only apply WebP format for non-GIF images
   if (!isGif(source)) {
@@ -52,7 +55,8 @@ export function getOptimizedImageUrl(
   }
   
   if (height) {
-    urlBuilder.height(height)
+    const retinaHeight = height * 2
+    urlBuilder.height(retinaHeight)
   }
   
   return urlBuilder.url()

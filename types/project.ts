@@ -4,7 +4,7 @@ export interface Project {
   slug: {
     current: string
   }
-  category: string
+  categories: string[]
   coverImage?: {
     asset: {
       _ref: string

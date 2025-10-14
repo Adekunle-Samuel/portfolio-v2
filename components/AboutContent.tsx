@@ -71,7 +71,12 @@ export default function AboutContent({ aboutData, siteSettings }: AboutContentPr
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
-              <ResumeButton siteSettings={siteSettings ?? null} variant="large" buttonText="Work with me" />
+              <a 
+                href={`mailto:${siteSettings?.email}`}
+                className="inline-block px-6 py-3 bg-black text-white text-sm font-medium hover:bg-gray-800 transition-colors duration-200"
+              >
+                Work with me
+              </a>
             </motion.div>
           </motion.div>
 

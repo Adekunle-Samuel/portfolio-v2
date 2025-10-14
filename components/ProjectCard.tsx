@@ -37,6 +37,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             src={imageUrl}
             alt={project.title}
             fill
+            quality={95}
             className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             onError={() => setImageError(true)}
@@ -75,10 +76,14 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             <h3 className="text-xs font-bold text-white">
               {project.title}
             </h3>
-            <div className="border border-[#d9d9d9] rounded-lg px-2 py-0.5 inline-flex w-fit">
-              <span className="text-[10px] font-regular text-white/50 tracking-tight">
-                {project.category}
-              </span>
+            <div className="flex flex-wrap gap-1">
+              {project.categories?.map((cat) => (
+                <div key={cat} className="border border-[#d9d9d9] rounded px-2 py-0.5 inline-flex w-fit">
+                  <span className="text-[10px] font-regular text-white/50 tracking-tight capitalize">
+                    {cat}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
 

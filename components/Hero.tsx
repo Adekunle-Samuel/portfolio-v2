@@ -11,8 +11,8 @@ interface HeroProps {
 
 export default function Hero({ siteSettings }: HeroProps) {
   const displayName = siteSettings?.name || 'Sam Adekunle'
-  const displayTagline = siteSettings?.tagline || 'I am a designer working at the intersection of product, brand and development.'
-  const email = siteSettings?.email || 'hello@example.com'
+  const displayTagline = siteSettings?.tagline || 'I am a productdesigner working at the intersection of product, brand and development.'
+  const email = siteSettings?.email || 'adekunlesamuel204@gmail.com'
   // Increased resolution for retina displays: 240x240 (2x of 120x120)
   const profileImageUrl = siteSettings?.profileImage ? urlFor(siteSettings.profileImage).width(240).height(240).quality(95).url() : null
 
@@ -52,7 +52,7 @@ export default function Hero({ siteSettings }: HeroProps) {
             <h1 className="text-sm font-normal text-black">
               Hi, I'm {displayName}
             </h1>
-            <p className="text-xs text-gray-text leading-relaxed max-w-[266px]">
+            <p className="text-xs text-gray-text leading-relaxed max-w-[400px]">
               {displayTagline}
             </p>
           </div>

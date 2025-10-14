@@ -10,7 +10,7 @@ interface ProjectSectionProps {
 }
 
 export default function ProjectSection({ projects }: ProjectSectionProps) {
-  const [activeFilter, setActiveFilter] = useState('all')
+  const [activeFilter, setActiveFilter] = useState('product')
 
   return (
     <>
@@ -19,4 +19,7 @@ export default function ProjectSection({ projects }: ProjectSectionProps) {
     </>
   )
 }
+
+
+
 

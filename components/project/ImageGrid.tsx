@@ -50,7 +50,7 @@ export default function ImageGrid({ largeImage, smallImages, onImageClick }: Ima
         {[0, 1, 2].map((i) => (
           <motion.div 
             key={i}
-            className="w-full h-[275px] rounded-lg overflow-hidden cursor-pointer"
+            className="w-full h-[420px] rounded-lg overflow-hidden cursor-pointer"
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.3 }}
             onClick={() => smallImageUrls[i] && onImageClick?.(smallImageUrls[i])}

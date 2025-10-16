@@ -55,7 +55,7 @@ export default function ContentSection({
 
   const imageElement = (
     <motion.div 
-      className="w-full lg:w-auto lg:flex-1 lg:max-w-[700px] h-[317px] rounded-lg overflow-hidden cursor-pointer"
+      className="w-full lg:w-auto lg:flex-1 lg:max-w-[700px] h-[480px] rounded-lg overflow-hidden cursor-pointer"
       whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.3 }}
       onClick={() => finalImageUrl && onImageClick?.(finalImageUrl)}

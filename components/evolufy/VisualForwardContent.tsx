@@ -22,28 +22,28 @@ export default function VisualForwardContent({ project }: VisualForwardContentPr
     
     // Hero image
     if (project.heroImage) {
-      images.push(getOptimizedImageUrl(project.heroImage, 2880, 1068))
+      images.push(getOptimizedImageUrl(project.heroImage, 1920, 1080))
     }
     
     // TLDR image
     if (project.tldr?.image) {
-      images.push(getOptimizedImageUrl(project.tldr.image, 1400, 634))
+      images.push(getOptimizedImageUrl(project.tldr.image, 1920, 1080))
     }
     
     // Content sections images
     project.contentSections?.forEach((section: ContentSectionType) => {
       if (section.image) {
-        images.push(getOptimizedImageUrl(section.image, 1400, 634))
+        images.push(getOptimizedImageUrl(section.image, 1920, 1080))
       }
     })
     
     // Gallery images
     if (project.gallery?.largeImage) {
-      images.push(getOptimizedImageUrl(project.gallery.largeImage, 2360, 1144))
+      images.push(getOptimizedImageUrl(project.gallery.largeImage, 1920, 1080))
     }
     if (project.gallery?.smallImages) {
       project.gallery.smallImages.forEach((img: any) => {
-        images.push(getOptimizedImageUrl(img, 762, 550))
+        images.push(getOptimizedImageUrl(img, 800, 600))
       })
     }
     
@@ -72,7 +72,7 @@ export default function VisualForwardContent({ project }: VisualForwardContentPr
 
   // Get hero image URL
   const heroImageUrl = project.heroImage 
-    ? getOptimizedImageUrl(project.heroImage, 2880, 1068)
+    ? getOptimizedImageUrl(project.heroImage, 1920, 1080)
     : null
 
   return (
@@ -143,13 +143,13 @@ export default function VisualForwardContent({ project }: VisualForwardContentPr
             >
               <div 
                 className="w-full h-[500px] lg:h-[600px] rounded-lg overflow-hidden cursor-pointer"
-                onClick={() => {
-                  const imgUrl = getOptimizedImageUrl(project.tldr.image, 1400, 634)
-                  handleImageClick(imgUrl)
-                }}
-              >
-                <motion.img 
-                  src={getOptimizedImageUrl(project.tldr.image, 1400, 634)} 
+                  onClick={() => {
+                    const imgUrl = getOptimizedImageUrl(project.tldr.image, 1920, 1080)
+                    handleImageClick(imgUrl)
+                  }}
+                >
+                  <motion.img 
+                    src={getOptimizedImageUrl(project.tldr.image, 1920, 1080)}
                   alt={project.tldr.title || "TLDR"}
                   className="w-full h-full object-cover"
                   whileHover={{ scale: 1.02 }}
@@ -184,7 +184,7 @@ export default function VisualForwardContent({ project }: VisualForwardContentPr
           {project.contentSections?.map((section: ContentSectionType, index: number) => {
             if (!section.image) return null
             
-            const imageUrl = getOptimizedImageUrl(section.image, 1400, 634)
+            const imageUrl = getOptimizedImageUrl(section.image, 1920, 1080)
             
             return (
               <motion.div
@@ -248,12 +248,12 @@ export default function VisualForwardContent({ project }: VisualForwardContentPr
                 <div 
                   className="w-full h-[500px] lg:h-[600px] rounded-lg overflow-hidden cursor-pointer"
                   onClick={() => {
-                    const imgUrl = getOptimizedImageUrl(project.gallery.largeImage, 2360, 1144)
+                    const imgUrl = getOptimizedImageUrl(project.gallery.largeImage, 1920, 1080)
                     handleImageClick(imgUrl)
                   }}
                 >
                   <motion.img 
-                    src={getOptimizedImageUrl(project.gallery.largeImage, 2360, 1144)} 
+                    src={getOptimizedImageUrl(project.gallery.largeImage, 1920, 1080)} 
                     alt="Gallery"
                     className="w-full h-full object-cover"
                     whileHover={{ scale: 1.02 }}
@@ -273,7 +273,7 @@ export default function VisualForwardContent({ project }: VisualForwardContentPr
                 transition={{ duration: 0.6 }}
               >
                 {project.gallery.smallImages.map((img: any, index: number) => {
-                  const imgUrl = getOptimizedImageUrl(img, 762, 550)
+                  const imgUrl = getOptimizedImageUrl(img, 800, 600)
                   return (
                     <div
                       key={index}

@@ -33,7 +33,7 @@ export default function ContentSection({
   layout = 'image-right',
   onImageClick
 }: ContentSectionProps) {
-  const finalImageUrl = image ? getOptimizedImageUrl(image, 1400, 634) : imageUrl
+  const finalImageUrl = image ? getOptimizedImageUrl(image, 1920, 1080) : imageUrl
   
   // Check if the image is a GIF to ensure proper handling
   const isGifImage = image 

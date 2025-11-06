@@ -21,8 +21,8 @@ const PlaceholderImage = ({ className }: { className?: string }) => (
 )
 
 export default function ImageGrid({ largeImage, smallImages, onImageClick }: ImageGridProps) {
-  const largeImageUrl = largeImage ? getOptimizedImageUrl(largeImage, 2360, 1144) : null
-  const smallImageUrls = smallImages?.map(img => getOptimizedImageUrl(img, 762, 550)) || []
+  const largeImageUrl = largeImage ? getOptimizedImageUrl(largeImage, 1920, 1080) : null
+  const smallImageUrls = smallImages?.map(img => getOptimizedImageUrl(img, 800, 600)) || []
   return (
     <motion.div 
       className="flex flex-col gap-4 w-full"

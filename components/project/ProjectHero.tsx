@@ -13,7 +13,7 @@ interface ProjectHeroProps {
 }
 
 export default function ProjectHero({ title, description, heroImage, imageUrl, onImageClick }: ProjectHeroProps) {
-  const finalImageUrl = heroImage ? getOptimizedImageUrl(heroImage, 2880, 1068) : imageUrl
+  const finalImageUrl = heroImage ? getOptimizedImageUrl(heroImage, 1920, 1080) : imageUrl
   return (
     <>
       {/* Large Hero Image */}

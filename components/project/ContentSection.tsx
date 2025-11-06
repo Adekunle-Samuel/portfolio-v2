@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { getOptimizedImageUrl } from '@/lib/sanity.client'
+import { getOptimizedImageUrl, isGif, isGifUrl } from '@/lib/sanity.client'
 import { SanityImageSource } from '@sanity/image-url/lib/types/types'
 
 interface ContentSectionProps {
@@ -35,6 +35,11 @@ export default function ContentSection({
 }: ContentSectionProps) {
   const finalImageUrl = image ? getOptimizedImageUrl(image, 1400, 634) : imageUrl
   
+  // Check if the image is a GIF to ensure proper handling
+  const isGifImage = image 
+    ? (isGif(image) || (finalImageUrl ? isGifUrl(finalImageUrl) : false))
+    : (imageUrl ? isGifUrl(imageUrl) : false)
+  
   const content = (
     <div className="flex flex-col gap-3 w-full lg:w-auto lg:flex-1 lg:max-w-[450px]">
       <h3 className="text-sm font-medium text-gray-text tracking-tight">
@@ -61,7 +66,13 @@ export default function ContentSection({
       onClick={() => finalImageUrl && onImageClick?.(finalImageUrl)}
     >
       {finalImageUrl ? (
-        <img src={finalImageUrl} alt={title} className="w-full h-full object-cover" />
+        <img 
+          src={finalImageUrl} 
+          alt={title} 
+          className="w-full h-full object-cover"
+          // Ensure GIFs can animate properly
+          loading={isGifImage ? "eager" : "lazy"}
+        />
       ) : (
         <PlaceholderImage />
       )}

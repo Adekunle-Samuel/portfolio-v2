@@ -16,7 +16,7 @@ export function urlFor(source: SanityImageSource) {
 }
 
 // Helper function to check if an image is a GIF
-function isGif(source: SanityImageSource): boolean {
+export function isGif(source: SanityImageSource): boolean {
   if (typeof source === 'string') {
     return source.toLowerCase().includes('.gif')
   }
@@ -37,6 +37,11 @@ function isGif(source: SanityImageSource): boolean {
   return false
 }
 
+// Helper function to check if a URL is a GIF
+export function isGifUrl(url: string): boolean {
+  return url.toLowerCase().includes('.gif') || url.toLowerCase().includes('image/gif')
+}
+
 // Smart image URL builder that preserves GIF animations
 // Default quality increased to 95 for high-resolution displays
 export function getOptimizedImageUrl(
@@ -45,14 +50,18 @@ export function getOptimizedImageUrl(
   height?: number,
   quality: number = 95
 ): string {
+  // For GIFs, return the original URL without transformations to preserve animation
+  // GIFs are very sensitive to any transformations - even resizing can break animation
+  if (isGif(source)) {
+    // Return base URL without any transformations
+    // This ensures GIF animations work perfectly
+    return urlFor(source).url()
+  }
+  
+  // For non-GIF images, apply full optimization
   // Double the dimensions for retina displays (2x)
   const retinaWidth = width * 2
-  const urlBuilder = urlFor(source).width(retinaWidth).quality(quality)
-  
-  // Only apply WebP format for non-GIF images
-  if (!isGif(source)) {
-    urlBuilder.format('webp')
-  }
+  const urlBuilder = urlFor(source).width(retinaWidth).quality(quality).format('webp')
   
   if (height) {
     const retinaHeight = height * 2

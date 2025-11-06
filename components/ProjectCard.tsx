@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Project } from '@/types/project'
-import { getOptimizedImageUrl } from '@/lib/sanity.client'
+import { getOptimizedImageUrl, isGif, isGifUrl } from '@/lib/sanity.client'
 
 interface ProjectCardProps {
   project: Project
@@ -19,6 +19,12 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
   const imageUrl = project.coverImage 
     ? getOptimizedImageUrl(project.coverImage, 912, 498)
     : null
+  
+  // Check if the image is a GIF to avoid Next.js optimization issues
+  // Check both the source and the generated URL as a fallback
+  const isGifImage = project.coverImage 
+    ? (isGif(project.coverImage) || (imageUrl ? isGifUrl(imageUrl) : false))
+    : false
 
   return (
     <Link href={`/projects/${project.slug.current}`}>
@@ -33,15 +39,25 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       {/* Project Image or Placeholder */}
       <div className="absolute inset-0">
         {imageUrl && !imageError ? (
-          <Image
-            src={imageUrl}
-            alt={project.title}
-            fill
-            quality={95}
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            onError={() => setImageError(true)}
-          />
+          isGifImage ? (
+            // Use regular img tag for GIFs to avoid Next.js optimization timeout
+            <img
+              src={imageUrl}
+              alt={project.title}
+              className="absolute inset-0 w-full h-full object-cover"
+              onError={() => setImageError(true)}
+            />
+          ) : (
+            <Image
+              src={imageUrl}
+              alt={project.title}
+              fill
+              quality={95}
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              onError={() => setImageError(true)}
+            />
+          )
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 flex items-center justify-center">
             <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">

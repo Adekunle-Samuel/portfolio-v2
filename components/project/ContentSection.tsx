@@ -43,7 +43,7 @@ export default function ContentSection({
       <h3 className="text-sm font-medium text-gray-text tracking-tight">
         {title}
       </h3>
-      <div className="text-xs text-black leading-relaxed">
+      <div className="text-sm text-black leading-relaxed">
         {text && <p className="mb-4 whitespace-pre-line">{text}</p>}
         {bullets && bullets.length > 0 && (
           <ul className="list-disc pl-5 space-y-2">

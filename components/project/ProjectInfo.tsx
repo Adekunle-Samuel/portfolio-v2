@@ -11,7 +11,7 @@ interface ProjectInfoProps {
 
 export default function ProjectInfo({ overview, timeline, tools, role }: ProjectInfoProps) {
   return (
-    <motion.section 
+    <motion.section
       className="w-full px-8 lg:px-16 py-16"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -23,7 +23,7 @@ export default function ProjectInfo({ overview, timeline, tools, role }: Project
           <h2 className="text-sm font-medium text-gray-text tracking-tight">
             Product Overview
           </h2>
-          <p className="text-xs text-black leading-relaxed">
+          <p className="text-sm text-black leading-relaxed">
             {overview}
           </p>
         </div>
@@ -34,7 +34,7 @@ export default function ProjectInfo({ overview, timeline, tools, role }: Project
             <h3 className="text-sm font-medium text-gray-text tracking-tight">
               Timeline
             </h3>
-            <p className="text-xs text-black">
+            <p className="text-sm text-black">
               {timeline}
             </p>
           </div>
@@ -43,7 +43,7 @@ export default function ProjectInfo({ overview, timeline, tools, role }: Project
             <h3 className="text-sm font-medium text-gray-text tracking-tight">
               Tools
             </h3>
-            <p className="text-xs text-black">
+            <p className="text-sm text-black">
               {tools}
             </p>
           </div>
@@ -52,7 +52,7 @@ export default function ProjectInfo({ overview, timeline, tools, role }: Project
             <h3 className="text-sm font-medium text-gray-text tracking-tight">
               Role
             </h3>
-            <p className="text-xs text-black">
+            <p className="text-sm text-black">
               {role}
             </p>
           </div>

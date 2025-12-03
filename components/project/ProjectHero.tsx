@@ -8,41 +8,53 @@ interface ProjectHeroProps {
   title: string
   description: string
   heroImage?: SanityImageSource | null
+  heroVideo?: { asset?: { url?: string } } | null
   imageUrl?: string | null
   onImageClick?: (imageUrl: string) => void
 }
 
-export default function ProjectHero({ title, description, heroImage, imageUrl, onImageClick }: ProjectHeroProps) {
+export default function ProjectHero({ title, description, heroImage, heroVideo, imageUrl, onImageClick }: ProjectHeroProps) {
   const finalImageUrl = heroImage ? getOptimizedImageUrl(heroImage, 2880, 1068) : imageUrl
+  const videoUrl = heroVideo?.asset?.url
+
   return (
     <>
-      {/* Large Hero Image */}
-      <motion.div 
+      {/* Large Hero Image/Video */}
+      <motion.div
         className="w-full h-[534px] mt-[121px] relative overflow-hidden cursor-pointer"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
-        onClick={() => finalImageUrl && onImageClick?.(finalImageUrl)}
+        onClick={() => !videoUrl && finalImageUrl && onImageClick?.(finalImageUrl)}
       >
-        {finalImageUrl ? (
-          <img 
-            src={finalImageUrl} 
+        {videoUrl ? (
+          <video
+            src={videoUrl}
+            className="w-full h-full object-cover"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        ) : finalImageUrl ? (
+          <img
+            src={finalImageUrl}
             alt={title}
             className="w-full h-full object-cover"
           />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 flex items-center justify-center">
             <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="20" y="25" width="80" height="70" rx="4" stroke="white" strokeOpacity="0.3" strokeWidth="2"/>
-              <circle cx="40" cy="45" r="8" fill="white" fillOpacity="0.3"/>
-              <path d="M20 75L40 55L60 68L80 48L100 68V90C100 93 97 95 95 95H25C22 95 20 93 20 90V75Z" fill="white" fillOpacity="0.3"/>
+              <rect x="20" y="25" width="80" height="70" rx="4" stroke="white" strokeOpacity="0.3" strokeWidth="2" />
+              <circle cx="40" cy="45" r="8" fill="white" fillOpacity="0.3" />
+              <path d="M20 75L40 55L60 68L80 48L100 68V90C100 93 97 95 95 95H25C22 95 20 93 20 90V75Z" fill="white" fillOpacity="0.3" />
             </svg>
           </div>
         )}
       </motion.div>
 
       {/* Title and Description */}
-      <motion.div 
+      <motion.div
         className="w-full px-8 lg:px-16 py-8 border-b border-gray-200"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

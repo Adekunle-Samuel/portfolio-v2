@@ -14,7 +14,7 @@ export interface Project {
   description?: string
   projectUrl?: string
   order?: number
-  
+
   // Detail page fields
   heroImage?: {
     asset: {
@@ -22,11 +22,17 @@ export interface Project {
       _type: string
     }
   }
+  heroVideo?: {
+    asset?: {
+      _id?: string
+      url?: string
+    }
+  }
   overview?: string
   timeline?: string
   tools?: string
   role?: string
-  
+
   tldr?: {
     title?: string
     text?: string
@@ -37,15 +43,27 @@ export interface Project {
         _type: string
       }
     }
+    video?: {
+      asset?: {
+        _id?: string
+        url?: string
+      }
+    }
   }
-  
+
   contentSections?: ContentSection[]
-  
+
   gallery?: {
     largeImage?: {
       asset: {
         _ref: string
         _type: string
+      }
+    }
+    largeVideo?: {
+      asset?: {
+        _id?: string
+        url?: string
       }
     }
     smallImages?: Array<{
@@ -55,7 +73,7 @@ export interface Project {
       }
     }>
   }
-  
+
   conclusion?: {
     title?: string
     text?: string
@@ -71,6 +89,12 @@ export interface ContentSection {
     asset: {
       _ref: string
       _type: string
+    }
+  }
+  video?: {
+    asset?: {
+      _id?: string
+      url?: string
     }
   }
   layout?: 'image-right' | 'image-left' | 'text-only'

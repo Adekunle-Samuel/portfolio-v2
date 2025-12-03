@@ -17,6 +17,12 @@ export const projectBySlugQuery = `*[_type == "project" && slug.current == $slug
   description,
   projectUrl,
   heroImage,
+  heroVideo {
+    asset-> {
+      _id,
+      url
+    }
+  },
   overview,
   timeline,
   tools,
@@ -25,17 +31,35 @@ export const projectBySlugQuery = `*[_type == "project" && slug.current == $slug
     title,
     text,
     bullets,
-    image
+    image,
+    video {
+      asset-> {
+        _id,
+        url
+      }
+    }
   },
   contentSections[] {
     title,
     text,
     bullets,
     image,
+    video {
+      asset-> {
+        _id,
+        url
+      }
+    },
     layout
   },
   gallery {
     largeImage,
+    largeVideo {
+      asset-> {
+        _id,
+        url
+      }
+    },
     smallImages
   },
   conclusion {

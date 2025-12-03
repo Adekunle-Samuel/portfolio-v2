@@ -81,6 +81,15 @@ export default defineType({
         hotspot: true,
       },
     }),
+    defineField({
+      name: 'heroVideo',
+      title: 'Hero Video',
+      type: 'file',
+      description: 'Optional video (WebM/MP4) to replace the hero image',
+      options: {
+        accept: 'video/webm,video/mp4',
+      },
+    }),
 
     // Project Information Section
     defineField({
@@ -119,32 +128,39 @@ export default defineType({
       type: 'object',
       description: 'Quick summary section (appears first)',
       fields: [
-        { 
-          name: 'title', 
-          title: 'Section Title', 
+        {
+          name: 'title',
+          title: 'Section Title',
           type: 'string',
           initialValue: 'TLDR',
         },
-        { 
-          name: 'text', 
-          title: 'Main Text', 
-          type: 'text', 
+        {
+          name: 'text',
+          title: 'Main Text',
+          type: 'text',
           rows: 4,
           description: 'Main paragraph text',
         },
-        { 
-          name: 'bullets', 
-          title: 'Bullet Points', 
-          type: 'array', 
+        {
+          name: 'bullets',
+          title: 'Bullet Points',
+          type: 'array',
           of: [{ type: 'string' }],
           description: 'Key takeaways (3-5 bullets)',
         },
-        { 
-          name: 'image', 
-          title: 'Section Image', 
+        {
+          name: 'image',
+          title: 'Section Image',
           type: 'image',
           description: 'Optional image (shows on right)',
           options: { hotspot: true },
+        },
+        {
+          name: 'video',
+          title: 'Section Video',
+          type: 'file',
+          description: 'Optional video (WebM/MP4) to show instead of image',
+          options: { accept: 'video/webm,video/mp4' },
         },
       ],
     }),
@@ -161,36 +177,43 @@ export default defineType({
           name: 'contentSection',
           title: 'Content Section',
           fields: [
-            { 
-              name: 'title', 
-              title: 'Section Title', 
+            {
+              name: 'title',
+              title: 'Section Title',
               type: 'string',
               validation: (Rule) => Rule.required(),
             },
-            { 
-              name: 'text', 
-              title: 'Main Text', 
-              type: 'text', 
+            {
+              name: 'text',
+              title: 'Main Text',
+              type: 'text',
               rows: 4,
               description: 'Main paragraph',
             },
-            { 
-              name: 'bullets', 
-              title: 'Bullet Points', 
-              type: 'array', 
+            {
+              name: 'bullets',
+              title: 'Bullet Points',
+              type: 'array',
               of: [{ type: 'string' }],
               description: 'Optional bullet list',
             },
-            { 
-              name: 'image', 
-              title: 'Section Image', 
+            {
+              name: 'image',
+              title: 'Section Image',
               type: 'image',
               description: 'Optional image',
               options: { hotspot: true },
             },
-            { 
-              name: 'layout', 
-              title: 'Image Layout', 
+            {
+              name: 'video',
+              title: 'Section Video',
+              type: 'file',
+              description: 'Optional video (WebM/MP4) to show instead of image',
+              options: { accept: 'video/webm,video/mp4' },
+            },
+            {
+              name: 'layout',
+              title: 'Image Layout',
               type: 'string',
               options: {
                 list: [
@@ -228,18 +251,28 @@ export default defineType({
       type: 'object',
       description: '1 large image + 3 smaller images',
       fields: [
-        { 
-          name: 'largeImage', 
-          title: 'Large Image (Full Width)', 
+        {
+          name: 'largeImage',
+          title: 'Large Image (Full Width)',
           type: 'image',
           description: 'Main showcase image (1180×572px)',
           options: { hotspot: true },
         },
-        { 
-          name: 'smallImages', 
-          title: 'Small Images', 
-          type: 'array', 
-          of: [{ type: 'image', options: { hotspot: true } }],
+        {
+          name: 'largeVideo',
+          title: 'Large Video',
+          type: 'file',
+          description: 'Optional video (WebM/MP4) to replace the large image',
+          options: { accept: 'video/webm,video/mp4' },
+        },
+        {
+          name: 'smallImages',
+          title: 'Small Images',
+          type: 'array',
+          of: [
+            { type: 'image', options: { hotspot: true } },
+            { type: 'file', title: 'Video', options: { accept: 'video/webm,video/mp4' } }
+          ],
           validation: (Rule) => Rule.max(3).min(0),
           description: 'Up to 3 smaller images (381×275px each)',
         },
@@ -253,22 +286,22 @@ export default defineType({
       type: 'object',
       description: 'Final summary section',
       fields: [
-        { 
-          name: 'title', 
-          title: 'Section Title', 
+        {
+          name: 'title',
+          title: 'Section Title',
           type: 'string',
           initialValue: 'Conclusion',
         },
-        { 
-          name: 'text', 
-          title: 'Main Text', 
-          type: 'text', 
+        {
+          name: 'text',
+          title: 'Main Text',
+          type: 'text',
           rows: 3,
         },
-        { 
-          name: 'bullets', 
-          title: 'Bullet Points', 
-          type: 'array', 
+        {
+          name: 'bullets',
+          title: 'Bullet Points',
+          type: 'array',
           of: [{ type: 'string' }],
         },
       ],

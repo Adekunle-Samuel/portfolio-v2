@@ -25,26 +25,26 @@ export default function ProjectContent({ project, allProjects, siteSettings }: P
   // Collect all images from the project
   const allImages = useMemo(() => {
     if (!project) return []
-    
+
     const images: string[] = []
-    
+
     // Hero image
     if (project.heroImage) {
       images.push(getOptimizedImageUrl(project.heroImage, 2880, 1068))
     }
-    
+
     // TLDR image
     if (project.tldr?.image) {
       images.push(getOptimizedImageUrl(project.tldr.image, 1400, 634))
     }
-    
+
     // Content sections images
     project.contentSections?.forEach((section: ContentSectionType) => {
       if (section.image) {
         images.push(getOptimizedImageUrl(section.image, 1400, 634))
       }
     })
-    
+
     // Gallery images
     if (project.gallery?.largeImage) {
       images.push(getOptimizedImageUrl(project.gallery.largeImage, 2360, 1144))
@@ -54,7 +54,7 @@ export default function ProjectContent({ project, allProjects, siteSettings }: P
         images.push(getOptimizedImageUrl(img, 762, 550))
       })
     }
-    
+
     return images
   }, [project])
 
@@ -82,13 +82,14 @@ export default function ProjectContent({ project, allProjects, siteSettings }: P
 
   return (
     <>
-      <ProjectHero 
+      <ProjectHero
         title={project.title}
         description={project.description || ""}
         heroImage={project.heroImage}
+        heroVideo={project.heroVideo}
         onImageClick={handleImageClick}
       />
-      
+
       <ProjectInfo
         overview={project.overview || "Project overview coming soon..."}
         timeline={project.timeline || "TBD"}
@@ -110,6 +111,7 @@ export default function ProjectContent({ project, allProjects, siteSettings }: P
               bullets={project.tldr.bullets}
               layout="image-right"
               image={project.tldr.image}
+              video={project.tldr.video}
               onImageClick={handleImageClick}
             />
           )}
@@ -118,7 +120,7 @@ export default function ProjectContent({ project, allProjects, siteSettings }: P
           {project.contentSections?.map((section: ContentSectionType, index: number) => {
             // Determine layout based on section structure
             const layout = section.layout || (index % 2 === 0 ? 'image-right' : 'image-left')
-            
+
             return (
               <ContentSection
                 key={index}
@@ -127,6 +129,7 @@ export default function ProjectContent({ project, allProjects, siteSettings }: P
                 bullets={section.bullets}
                 layout={layout as 'image-right' | 'image-left'}
                 image={section.image}
+                video={section.video}
                 onImageClick={handleImageClick}
               />
             )
@@ -134,8 +137,9 @@ export default function ProjectContent({ project, allProjects, siteSettings }: P
 
           {/* Image Grid */}
           {project.gallery && (
-            <ImageGrid 
+            <ImageGrid
               largeImage={project.gallery.largeImage}
+              largeVideo={project.gallery.largeVideo}
               smallImages={project.gallery.smallImages}
               onImageClick={handleImageClick}
             />

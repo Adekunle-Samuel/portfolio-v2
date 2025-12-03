@@ -11,7 +11,7 @@ interface ContentSectionProps {
   image?: SanityImageSource | null
   video?: { asset?: { url?: string } } | null
   imageUrl?: string | null
-  layout?: 'image-left' | 'image-right'
+  layout?: 'image-left' | 'image-right' | 'text-only'
   onImageClick?: (imageUrl: string) => void
 }
 
@@ -80,6 +80,36 @@ export default function ContentSection({
     </motion.div>
   )
 
+  // Handle text-only layout (centered, quoted style)
+  if (layout === 'text-only') {
+    return (
+      <motion.div
+        className="flex justify-center w-full"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="flex flex-col gap-4 w-full max-w-[600px] text-center">
+          <h3 className="text-2xl font-medium text-gray-text tracking-tight">
+            {title}
+          </h3>
+          <div className="text-lg text-black leading-relaxed">
+            {text && <p className="mb-4 whitespace-pre-line">{text}</p>}
+            {bullets && bullets.length > 0 && (
+              <ul className="list-none space-y-2">
+                {bullets.map((bullet, i) => (
+                  <li key={i}>{bullet}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+      </motion.div>
+    )
+  }
+
+  // Handle image-left and image-right layouts
   return (
     <motion.div
       className="flex flex-col lg:flex-row items-start justify-between gap-12 w-full"

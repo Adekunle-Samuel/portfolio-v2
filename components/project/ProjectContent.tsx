@@ -127,7 +127,7 @@ export default function ProjectContent({ project, allProjects, siteSettings }: P
                 title={section.title}
                 text={section.text}
                 bullets={section.bullets}
-                layout={layout as 'image-right' | 'image-left'}
+                layout={layout as 'image-right' | 'image-left' | 'text-only'}
                 image={section.image}
                 video={section.video}
                 onImageClick={handleImageClick}
@@ -147,19 +147,21 @@ export default function ProjectContent({ project, allProjects, siteSettings }: P
 
           {/* Conclusion */}
           {project.conclusion && (
-            <div className="flex flex-col gap-3 max-w-[500px]">
-              <h3 className="text-sm font-medium text-gray-text tracking-tight">
-                {project.conclusion.title || "Conclusion"}
-              </h3>
-              <div className="text-xs text-black leading-relaxed">
-                {project.conclusion.text && <p className="mb-4">{project.conclusion.text}</p>}
-                {project.conclusion.bullets && project.conclusion.bullets.length > 0 && (
-                  <ul className="list-disc pl-5 space-y-2">
-                    {project.conclusion.bullets.map((bullet: string, i: number) => (
-                      <li key={i}>{bullet}</li>
-                    ))}
-                  </ul>
-                )}
+            <div className="flex justify-center w-full">
+              <div className="flex flex-col gap-4 w-full max-w-[600px] text-center">
+                <h3 className="text-2xl font-medium text-gray-text tracking-tight">
+                  {project.conclusion.title || "Conclusion"}
+                </h3>
+                <div className="text-lg text-black leading-relaxed">
+                  {project.conclusion.text && <p className="mb-4">{project.conclusion.text}</p>}
+                  {project.conclusion.bullets && project.conclusion.bullets.length > 0 && (
+                    <ul className="list-none space-y-2">
+                      {project.conclusion.bullets.map((bullet: string, i: number) => (
+                        <li key={i}>{bullet}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               </div>
             </div>
           )}

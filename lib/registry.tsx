@@ -22,10 +22,7 @@ export default function StyledComponentsRegistry({
   if (typeof window !== 'undefined') return <>{children}</>
 
   return (
-    <StyleSheetManager
-      sheet={styledComponentsStyleSheet.instance}
-      shouldForwardProp={(prop) => prop !== 'disableTransition'}
-    >
+    <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>
       {children}
     </StyleSheetManager>
   )

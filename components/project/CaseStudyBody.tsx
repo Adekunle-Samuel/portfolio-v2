@@ -238,12 +238,25 @@ export default function CaseStudyBody({ project, onImageClick }: CaseStudyBodyPr
                   </figure>
                 ) : imageUrl ? (
                   <figure className="mt-7">
-                    <img
-                      src={imageUrl}
-                      alt={s.title}
-                      className="w-full rounded-lg cursor-pointer"
+                    <button
+                      type="button"
                       onClick={() => onImageClick?.(imageUrl)}
-                    />
+                      aria-label="View image full screen"
+                      className="group relative block w-full overflow-hidden rounded-lg cursor-zoom-in"
+                    >
+                      <img
+                        src={imageUrl}
+                        alt={s.title}
+                        className="w-full block transition-transform duration-300 group-hover:scale-[1.02]"
+                      />
+                      <span className="pointer-events-none absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-300" />
+                      <span className="pointer-events-none absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-xs font-medium text-black opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                        </svg>
+                        Expand
+                      </span>
+                    </button>
                   </figure>
                 ) : null}
               </motion.section>

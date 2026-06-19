@@ -78,7 +78,7 @@ export default function ProjectHero({
         transition={{ duration: 0.6, delay: 0.25 }}
       >
         <div
-          className={`max-w-[1440px] mx-auto h-[360px] sm:h-[480px] lg:h-[534px] relative overflow-hidden rounded-lg ${videoUrl ? '' : 'cursor-pointer'}`}
+          className={`group max-w-[1440px] mx-auto h-[360px] sm:h-[480px] lg:h-[534px] relative overflow-hidden rounded-lg ${videoUrl ? '' : 'cursor-zoom-in'}`}
           onClick={() => !videoUrl && finalImageUrl && onImageClick?.(finalImageUrl)}
         >
           {videoUrl ? (
@@ -91,7 +91,16 @@ export default function ProjectHero({
               playsInline
             />
           ) : finalImageUrl ? (
-            <img src={finalImageUrl} alt={title} className="w-full h-full object-cover" />
+            <>
+              <img src={finalImageUrl} alt={title} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
+              <span className="pointer-events-none absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-300" />
+              <span className="pointer-events-none absolute bottom-4 right-4 flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-xs font-medium text-black opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                </svg>
+                Expand
+              </span>
+            </>
           ) : (
             <div className="w-full h-full bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 flex items-center justify-center">
               <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -73,6 +73,19 @@ export const projectSlugsQuery = `*[_type == "project"] {
   "slug": slug.current
 }`
 
+// Side Projects (Lab) Query
+export const sideProjectsQuery = `*[_type == "sideProject"] | order(order asc) {
+  _id,
+  title,
+  url,
+  displayUrl,
+  excerpt,
+  tools,
+  goal,
+  embed,
+  poster
+}`
+
 // Site Settings Query
 export const siteSettingsQuery = `*[_type == "siteSettings"][0] {
   _id,

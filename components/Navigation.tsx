@@ -55,14 +55,20 @@ export default function Navigation({ siteSettings }: NavigationProps = { siteSet
               >
                 About
               </Link>
-              <Link 
-                href="/experience" 
+              <Link
+                href="/experience"
                 className="text-xs text-black hover:text-gray-600 transition-colors"
               >
                 Experience
               </Link>
+              <Link
+                href="/lab"
+                className="text-xs text-black hover:text-gray-600 transition-colors"
+              >
+                Lab
+              </Link>
             </div>
-            
+
             {/* Desktop Navigation - Right Side */}
             <div className="hidden lg:flex items-center gap-2">
               {siteSettings?.socialLinks?.linkedin && (
@@ -150,12 +156,19 @@ export default function Navigation({ siteSettings }: NavigationProps = { siteSet
               >
                 About
               </Link>
-              <Link 
-                href="/experience" 
+              <Link
+                href="/experience"
                 onClick={closeMenu}
                 className="text-2xl text-black hover:text-gray-600 transition-colors"
               >
                 Experience
+              </Link>
+              <Link
+                href="/lab"
+                onClick={closeMenu}
+                className="text-2xl text-black hover:text-gray-600 transition-colors"
+              >
+                Lab
               </Link>
 
               {/* Social Links */}

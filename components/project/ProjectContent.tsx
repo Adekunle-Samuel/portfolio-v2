@@ -2,9 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import ProjectHero from '@/components/project/ProjectHero'
-import ProjectInfo from '@/components/project/ProjectInfo'
-import ContentSection from '@/components/project/ContentSection'
-import ImageGrid from '@/components/project/ImageGrid'
+import CaseStudyBody from '@/components/project/CaseStudyBody'
 import ProjectCarousel from '@/components/project/ProjectCarousel'
 import BackButton from '@/components/project/BackButton'
 import ImagePreview from '@/components/project/ImagePreview'
@@ -25,26 +23,26 @@ export default function ProjectContent({ project, allProjects, siteSettings }: P
   // Collect all images from the project
   const allImages = useMemo(() => {
     if (!project) return []
-
+    
     const images: string[] = []
-
+    
     // Hero image
     if (project.heroImage) {
       images.push(getOptimizedImageUrl(project.heroImage, 2880, 1068))
     }
-
+    
     // TLDR image
     if (project.tldr?.image) {
       images.push(getOptimizedImageUrl(project.tldr.image, 1400, 634))
     }
-
+    
     // Content sections images
     project.contentSections?.forEach((section: ContentSectionType) => {
       if (section.image) {
         images.push(getOptimizedImageUrl(section.image, 1400, 634))
       }
     })
-
+    
     // Gallery images
     if (project.gallery?.largeImage) {
       images.push(getOptimizedImageUrl(project.gallery.largeImage, 2360, 1144))
@@ -54,7 +52,7 @@ export default function ProjectContent({ project, allProjects, siteSettings }: P
         images.push(getOptimizedImageUrl(img, 762, 550))
       })
     }
-
+    
     return images
   }, [project])
 
@@ -85,88 +83,15 @@ export default function ProjectContent({ project, allProjects, siteSettings }: P
       <ProjectHero
         title={project.title}
         description={project.description || ""}
+        categories={project.categories}
+        timeline={project.timeline}
+        projectUrl={project.projectUrl}
         heroImage={project.heroImage}
         heroVideo={project.heroVideo}
         onImageClick={handleImageClick}
       />
 
-      <ProjectInfo
-        overview={project.overview || "Project overview coming soon..."}
-        timeline={project.timeline || "TBD"}
-        tools={project.tools || "N/A"}
-        role={project.role || "N/A"}
-      />
-
-      <div className="w-full px-8 lg:px-16">
-        <div className="max-w-[1440px] mx-auto border-t border-gray-200" />
-      </div>
-
-      <div className="w-full px-8 lg:px-16 py-32">
-        <div className="max-w-[1440px] mx-auto flex flex-col gap-32">
-          {/* TLDR Section */}
-          {project.tldr && (
-            <ContentSection
-              title={project.tldr.title || "TLDR"}
-              text={project.tldr.text}
-              bullets={project.tldr.bullets}
-              layout="image-right"
-              image={project.tldr.image}
-              video={project.tldr.video}
-              onImageClick={handleImageClick}
-            />
-          )}
-
-          {/* Content Sections */}
-          {project.contentSections?.map((section: ContentSectionType, index: number) => {
-            // Determine layout based on section structure
-            const layout = section.layout || (index % 2 === 0 ? 'image-right' : 'image-left')
-
-            return (
-              <ContentSection
-                key={index}
-                title={section.title}
-                text={section.text}
-                bullets={section.bullets}
-                layout={layout as 'image-right' | 'image-left' | 'text-only'}
-                image={section.image}
-                video={section.video}
-                onImageClick={handleImageClick}
-              />
-            )
-          })}
-
-          {/* Image Grid */}
-          {project.gallery && (
-            <ImageGrid
-              largeImage={project.gallery.largeImage}
-              largeVideo={project.gallery.largeVideo}
-              smallImages={project.gallery.smallImages}
-              onImageClick={handleImageClick}
-            />
-          )}
-
-          {/* Conclusion */}
-          {project.conclusion && (
-            <div className="flex justify-center w-full">
-              <div className="flex flex-col gap-4 w-full max-w-[600px] text-center">
-                <h3 className="text-2xl font-medium text-gray-text tracking-tight">
-                  {project.conclusion.title || "Conclusion"}
-                </h3>
-                <div className="text-lg text-black leading-relaxed">
-                  {project.conclusion.text && <p className="mb-4">{project.conclusion.text}</p>}
-                  {project.conclusion.bullets && project.conclusion.bullets.length > 0 && (
-                    <ul className="list-none space-y-2">
-                      {project.conclusion.bullets.map((bullet: string, i: number) => (
-                        <li key={i}>{bullet}</li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+      <CaseStudyBody project={project} onImageClick={handleImageClick} />
 
       <div className="w-full px-8 lg:px-16">
         <div className="max-w-[1440px] mx-auto border-t border-gray-200" />

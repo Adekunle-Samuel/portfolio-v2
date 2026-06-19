@@ -9,11 +9,12 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        inter: ["Inter", "sans-serif"],
+        inter: ["var(--font-inter)", "Inter", "sans-serif"],
       },
       colors: {
         gray: {
-          text: "#8d8d8d",
+          // Darkened from #8d8d8d (~3.3:1, fails WCAG AA) to ~5.3:1 to pass AA
+          text: "#6b6b6b",
         },
       },
       maxWidth: {

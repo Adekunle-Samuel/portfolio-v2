@@ -73,13 +73,13 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       >
         <div className="flex items-end justify-between">
           <div className="flex flex-col gap-1">
-            <h3 className="text-xs font-bold text-white">
+            <h3 className="text-sm font-semibold text-white">
               {project.title}
             </h3>
             <div className="flex flex-wrap gap-1">
               {project.categories?.map((cat) => (
                 <div key={cat} className="border border-[#d9d9d9] rounded px-2 py-0.5 inline-flex w-fit">
-                  <span className="text-[10px] font-regular text-white/50 tracking-tight capitalize">
+                  <span className="text-[10px] font-normal text-white/70 tracking-tight capitalize">
                     {cat}
                   </span>
                 </div>
@@ -88,7 +88,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           </div>
 
           <div className="flex items-center gap-1">
-            <span className="text-[8px] font-thin text-white tracking-tight">
+            <span className="text-[11px] font-normal text-white tracking-tight">
               View
             </span>
             <svg 

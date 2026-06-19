@@ -9,6 +9,8 @@ import Footer from '@/components/Footer'
 import AboutContent from '@/components/AboutContent'
 import AboutProjectCarousel from '@/components/AboutProjectCarousel'
 
+export const revalidate = 60
+
 async function getProjects(): Promise<Project[]> {
   try {
     const projects = await client.fetch(projectsQuery)

@@ -6,6 +6,8 @@ import { aboutQuery, siteSettingsQuery } from '@/lib/queries'
 import { About } from '@/types/about'
 import { SiteSettings } from '@/types/siteSettings'
 
+export const revalidate = 60
+
 async function getAboutData(): Promise<About | null> {
   try {
     const about = await client.fetch(aboutQuery)

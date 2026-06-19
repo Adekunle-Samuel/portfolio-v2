@@ -8,6 +8,10 @@ import Hero from '@/components/Hero'
 import ProjectSection from '@/components/ProjectSection'
 import Footer from '@/components/Footer'
 
+// Regenerate at most once a minute so new Sanity content (incl. videos) appears
+// without a manual redeploy.
+export const revalidate = 60
+
 async function getProjects(): Promise<Project[]> {
   try {
     const projects = await client.fetch(projectsQuery)

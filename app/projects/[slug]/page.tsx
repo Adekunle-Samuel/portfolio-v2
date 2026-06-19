@@ -6,6 +6,10 @@ import ProjectViewTracker from '@/components/ProjectViewTracker'
 import { client } from '@/lib/sanity.client'
 import { projectBySlugQuery, projectsQuery, projectSlugsQuery, siteSettingsQuery } from '@/lib/queries'
 
+// ISR: regenerate at most once a minute so Sanity edits (new videos, copy, etc.)
+// show up on the live site without a manual redeploy.
+export const revalidate = 60
+
 interface ProjectPageProps {
   params: Promise<{
     slug: string

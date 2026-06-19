@@ -46,11 +46,11 @@ export default function ProjectHero({
               {eyebrow}
             </p>
           )}
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-black tracking-[-0.02em] leading-[1.05] max-w-[18ch]">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-black tracking-[-0.02em] leading-[1.1] max-w-[24ch]">
             {title}
           </h1>
           {description && (
-            <p className="text-lg sm:text-xl text-[#2a2a2a] leading-relaxed max-w-[46ch] mt-5">
+            <p className="text-lg sm:text-xl text-[#2a2a2a] leading-relaxed max-w-[64ch] mt-5">
               {description}
             </p>
           )}
